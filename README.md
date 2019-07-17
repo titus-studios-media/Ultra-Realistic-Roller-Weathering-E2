@@ -1,6 +1,13 @@
 # Titus's Ultra-Realistic Roller & Weathering Expression 2
 
-![Build-Status](https://img.shields.io/badge/build-passing-brightgreen.svg)
+![Build-Status](https://img.shields.io/badge/build-failed-red.svg)
+![Build-Status](https://img.shields.io/badge/build-failed-red.svg)
+![Build-Status](https://img.shields.io/badge/build-failed-red.svg)
+![Build-Status](https://img.shields.io/badge/build-failed-red.svg)
+![Build-Status](https://img.shields.io/badge/build-failed-red.svg)
+![Build-Status](https://img.shields.io/badge/build-failed-red.svg)
+![Build-Status](https://img.shields.io/badge/build-failed-red.svg)
+![Build-Status](https://img.shields.io/badge/build-passed-brightgreen.svg)
 ![Manifest-Version](https://img.shields.io/github/last-commit/titus-studios-media/Ultra-Realistic-Roller-Weathering-E2.svg)
 ![Repo-Size](https://img.shields.io/github/repo-size/titus-studios-media/Ultra-Realistic-Roller-Weathering-E2.svg)
 
