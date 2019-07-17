@@ -1,0 +1,506 @@
+@name Titus's Ultra-Realistic Roller & Weathering E2
+@inputs E:entity E2:entity Slipping MPH_Override
+@outputs AxleRPM WheelCircumference IPH
+@persist WeatheringAmmount GrimeAmmount RustAmmount UnderCoat_SubTexture_Number Weathering_SubTexture_Number Grime_SubTexture_Number Rust_SubTexture_Number [WeatheringTexture GrimeTexture UnderCoat BodyModel]:string 
+@persist [Bodygroup1 Bodygroup2 Bodygroup3 Bodygroup4 Bodygroup5 Bodygroup6 Bodygroup7 Bodygroup8 Bodygroup9 Bodygroup10]:array [RustTexture]:string SmoothTable:table RerailerSideA_Enable2
+@persist OffsetX OffsetY OffsetZ WheelAngle1 WheelAngle2 RPM_A RPM_C RPM_C2 SpinUpTime SlipSpin SlippingAxle WheelDiameter WheelCircumference MPH VelL Axle1Position Axle2Position Axle3Position Three_Axle
+@persist AxleOffsetX AxleOffsetY AxleOffsetZ RerailerBogie1 RerailerBogie2 RerailerSideA_Enable RerailerSideB_Enable  [RerailModel_SideA1 RerailModel_SideB1 RerailModel_SideA2 RerailModel_SideB2]:string
+@persist [Rerail1_SideA_Colour Rerail2_SideA_Colour Rerail1_SideB_Colour Rerail2_SideB_Colour Rerail1_SideA_Scale Rerail2_SideA_Scale Rerail1_SideB_Scale Rerail2_SideB_Scale]:vector
+@persist RerailerSideA_PosOffsetX RerailerSideA_PosOffsetY RerailerSideA_PosOffsetZ RerailerSideB_PosOffsetX RerailerSideB_PosOffsetY RerailerSideB_PosOffsetZ RerailerSideA_PosOffsetX2 RerailerSideA_PosOffsetY2
+@persist RerailerSideA_PosOffsetZ2 RerailerSideC_PosOffsetX2 RerailerSideC_PosOffsetY2 RerailerSideC_PosOffsetZ2 RerailerSideB_Enable2 [RerailerSideA1_AngOffset RerailerSideB1_AngOffset RerailerSideA2_AngOffset RerailerSideB2_AngOffset]:angle
+@trigger 
+@model
+
+if(dupefinished() | duped()){ reset()}
+if(first()){ BodyModel = E:model() E:setAlpha(255) E2:setAlpha(255) timer("spawn",5000) soundPlay(1,0,"buttons/button14.wav") soundPlay("loading",0,"ambient/machines/ticktock.wav")
+printColor(vec(0,255,0),"[Titus's Ultra-Realistic Roller & Weathering E2]", vec(255), " Loading... Expression 2 extensions & Compiling calculations.") 
+setName("Titus's Ultra-Realistic Roller & Weathering E2 [LOADING] Compiling Calculations & Defining all Variables...") 
+
+# Start of Config
+    
+# Weathering Settings (Optional)
+
+UnderCoat = "models/proppertextures/enamel_black"
+WeatheringTexture = "models/props_pipes/pipeset_metal"
+GrimeTexture = "models/props/CS_militia/boulder01"
+RustTexture = ""
+
+UnderCoat_SubTexture_Number = 2
+
+Weathering_SubTexture_Number = 2
+WeatheringAmmount = 150 # 0 to 255
+Grime_SubTexture_Number = 2
+GrimeAmmount = 100 # 0 to 255
+Rust_SubTexture_Number = 2
+RustAmmount = 0 # 0 to 255
+
+#-- Bodygrops (Change bodygrops on the Bogie, First Number is the bodygroup number, Second Number is what you set that bodygroup to)
+
+Bodygroup1 = array(0,0)
+Bodygroup2 = array(0,0)
+Bodygroup3 = array(0,0)
+Bodygroup4 = array(0,0)
+Bodygroup5 = array(0,0)
+Bodygroup6 = array(0,0)
+Bodygroup7 = array(0,0)
+Bodygroup8 = array(0,0)
+Bodygroup9 = array(0,0)
+Bodygroup10 = array(0,0)
+
+
+# Weathering Holo Offset Settings (Best you don't mess with this...)
+
+OffsetX = 0
+OffsetY = 0
+OffsetZ = 0
+
+
+# Axle Holo Offset Settings
+
+AxleOffsetX = 0
+AxleOffsetY = 0
+AxleOffsetZ = -26.25
+
+Axle1Position = 54
+Axle2Position = -54
+
+Three_Axle = 0
+Axle3Position = 0
+
+WheelDiameter = 40
+
+
+# Re-Railer Holo Offset Settings - Can be used as a Misc Holo if you want*
+
+# Rerailer No.1
+
+RerailerBogie1 = 0
+
+RerailerSideA_Enable = 1
+Rerail1_SideA_Colour = vec(255)
+Rerail1_SideA_Scale = vec(1,1,1)
+RerailModel_SideA1 = "models/sprops/misc/origin.mdl"
+RerailerSideA_PosOffsetX = 50
+RerailerSideA_PosOffsetY = 0
+RerailerSideA_PosOffsetZ = 0
+RerailerSideA1_AngOffset = ang(0,0,0)
+
+RerailerSideB_Enable = 1
+Rerail1_SideB_Colour = vec(255)
+Rerail1_SideB_Scale = vec(1,1,1)
+RerailModel_SideB1 = "models/sprops/misc/origin.mdl"
+RerailerSideB_PosOffsetX = -50
+RerailerSideB_PosOffsetY = 0
+RerailerSideB_PosOffsetZ = 0
+RerailerSideB1_AngOffset = ang(0,0,0)
+
+# Rerailer No.2
+
+RerailerBogie2 = 0
+
+RerailerSideA_Enable2 = 1
+Rerail2_SideA_Colour = vec(255)
+Rerail2_SideA_Scale = vec(1,1,1)
+RerailModel_SideA2 = "models/sprops/misc/origin.mdl"
+RerailerSideA_PosOffsetX2 = 50
+RerailerSideA_PosOffsetY2 = 0
+RerailerSideA_PosOffsetZ2 = 0
+RerailerSideA2_AngOffset = ang(0,0,0)
+
+RerailerSideB_Enable2 = 1
+Rerail2_SideB_Colour = vec(255)
+Rerail2_SideB_Scale = vec(1,1,1)
+RerailModel_SideB2 = "models/sprops/misc/origin.mdl"
+RerailerSideC_PosOffsetX2 = -50
+RerailerSideC_PosOffsetY2 = 0
+RerailerSideC_PosOffsetZ2 = 0
+RerailerSideB2_AngOffset = ang(0,0,0)
+
+# End of Config
+
+function number smooth(Var,SmoothAmount,ID:string,DefaultVal) { #smoothes out a number using delta dampening
+    if(!SmoothTable:exists(ID)) {
+        SmoothTable[ID,number] = DefaultVal
+    }
+    local Smooth = SmoothTable[ID,number]
+    Smooth += (Var-Smooth) / SmoothAmount
+    SmoothTable[ID,number] = Smooth
+return Smooth
+}
+
+SpinUpTime = 1
+WheelCircumference = WheelDiameter*pi()
+
+}
+if(clk("spawn")){
+setName("Titus's Ultra-Realistic Roller & Weathering E2 [LOADING] Compiling Holograms...") 
+soundPlay(1,0,"buttons/button14.wav")
+
+# Holo Madness Begins Below
+
+#---- Outer
+
+    A = 1
+    holoCreate(A)
+    holoParent(A,E)
+    holoColor(A,vec(255))
+    holoScale(A,vec(1))
+    holoModel(A, BodyModel)
+    holoPos(A,E:toWorld(vec(OffsetX,OffsetY,OffsetZ)))
+    holoAng(A,E:toWorld(ang(0,0,0)))   
+    holoEntity(A):setSubMaterial(UnderCoat_SubTexture_Number,UnderCoat)
+    holoBodygroup(A,Bodygroup1[1,number],Bodygroup1[2,number])
+    holoBodygroup(A,Bodygroup2[1,number],Bodygroup2[2,number])
+    holoBodygroup(A,Bodygroup3[1,number],Bodygroup3[2,number])
+    holoBodygroup(A,Bodygroup4[1,number],Bodygroup4[2,number])
+    holoBodygroup(A,Bodygroup5[1,number],Bodygroup5[2,number])
+    holoBodygroup(A,Bodygroup6[1,number],Bodygroup6[2,number])
+    holoBodygroup(A,Bodygroup7[1,number],Bodygroup7[2,number])
+    holoBodygroup(A,Bodygroup8[1,number],Bodygroup8[2,number])
+    holoBodygroup(A,Bodygroup9[1,number],Bodygroup9[2,number])
+    holoBodygroup(A,Bodygroup10[1,number],Bodygroup10[2,number])
+    holoEntity(A):setSubMaterial(8,"models/proppertextures/invisible")
+    holoEntity(A):setSubMaterial(9,"models/proppertextures/invisible")
+    holoEntity(A):setSubMaterial(10,"models/proppertextures/invisible")
+    
+    A = 2
+    holoCreate(A)
+    holoParent(A,E)
+    holoColor(A,vec(255))
+    holoScale(A,vec(1))
+    holoModel(A, BodyModel)
+    holoPos(A,E:toWorld(vec(OffsetX,OffsetY,OffsetZ)))
+    holoAng(A,E:toWorld(ang(0,0,0)))   
+    holoEntity(A):setSubMaterial(Weathering_SubTexture_Number,WeatheringTexture)
+    holoBodygroup(A,Bodygroup1[1,number],Bodygroup1[2,number])
+    holoBodygroup(A,Bodygroup2[1,number],Bodygroup2[2,number])
+    holoBodygroup(A,Bodygroup3[1,number],Bodygroup3[2,number])
+    holoBodygroup(A,Bodygroup4[1,number],Bodygroup4[2,number])
+    holoBodygroup(A,Bodygroup5[1,number],Bodygroup5[2,number])
+    holoBodygroup(A,Bodygroup6[1,number],Bodygroup6[2,number])
+    holoBodygroup(A,Bodygroup7[1,number],Bodygroup7[2,number])
+    holoBodygroup(A,Bodygroup8[1,number],Bodygroup8[2,number])
+    holoBodygroup(A,Bodygroup9[1,number],Bodygroup9[2,number])
+    holoBodygroup(A,Bodygroup10[1,number],Bodygroup10[2,number])
+    holoAlpha(A,WeatheringAmmount)
+    holoEntity(A):setSubMaterial(8,"models/proppertextures/invisible")
+    holoEntity(A):setSubMaterial(9,"models/proppertextures/invisible")
+    holoEntity(A):setSubMaterial(10,"models/proppertextures/invisible")
+   
+    A = 3
+    holoCreate(A)
+    holoParent(A,E)
+    holoColor(A,vec(255))
+    holoScale(A,vec(1))
+    holoModel(A, BodyModel)
+    holoPos(A,E:toWorld(vec(OffsetX,OffsetY,OffsetZ)))
+    holoAng(A,E:toWorld(ang(0,0,0)))   
+    holoEntity(A):setSubMaterial(Grime_SubTexture_Number,GrimeTexture)
+    holoBodygroup(A,Bodygroup1[1,number],Bodygroup1[2,number])
+    holoBodygroup(A,Bodygroup2[1,number],Bodygroup2[2,number])
+    holoBodygroup(A,Bodygroup3[1,number],Bodygroup3[2,number])
+    holoBodygroup(A,Bodygroup4[1,number],Bodygroup4[2,number])
+    holoBodygroup(A,Bodygroup5[1,number],Bodygroup5[2,number])
+    holoBodygroup(A,Bodygroup6[1,number],Bodygroup6[2,number])
+    holoBodygroup(A,Bodygroup7[1,number],Bodygroup7[2,number])
+    holoBodygroup(A,Bodygroup8[1,number],Bodygroup8[2,number])
+    holoBodygroup(A,Bodygroup9[1,number],Bodygroup9[2,number])
+    holoBodygroup(A,Bodygroup10[1,number],Bodygroup10[2,number])
+    holoAlpha(A,GrimeAmmount)
+    holoEntity(A):setSubMaterial(8,"models/proppertextures/invisible")
+    holoEntity(A):setSubMaterial(9,"models/proppertextures/invisible")
+    holoEntity(A):setSubMaterial(10,"models/proppertextures/invisible")
+    
+    A = 4
+    holoCreate(A)
+    holoParent(A,E)
+    holoColor(A,vec(255))
+    holoScale(A,vec(1))
+    holoModel(A, BodyModel)
+    holoPos(A,E:toWorld(vec(OffsetX,OffsetY,OffsetZ)))
+    holoAng(A,E:toWorld(ang(0,0,0)))   
+    holoEntity(A):setSubMaterial(Rust_SubTexture_Number,RustTexture)
+    holoBodygroup(A,Bodygroup1[1,number],Bodygroup1[2,number])
+    holoBodygroup(A,Bodygroup2[1,number],Bodygroup2[2,number])
+    holoBodygroup(A,Bodygroup3[1,number],Bodygroup3[2,number])
+    holoBodygroup(A,Bodygroup4[1,number],Bodygroup4[2,number])
+    holoBodygroup(A,Bodygroup5[1,number],Bodygroup5[2,number])
+    holoBodygroup(A,Bodygroup6[1,number],Bodygroup6[2,number])
+    holoBodygroup(A,Bodygroup7[1,number],Bodygroup7[2,number])
+    holoBodygroup(A,Bodygroup8[1,number],Bodygroup8[2,number])
+    holoBodygroup(A,Bodygroup9[1,number],Bodygroup9[2,number])
+    holoBodygroup(A,Bodygroup10[1,number],Bodygroup10[2,number])
+    holoAlpha(A,RustAmmount)
+    holoEntity(A):setSubMaterial(8,"models/proppertextures/invisible")
+    holoEntity(A):setSubMaterial(9,"models/proppertextures/invisible")
+    holoEntity(A):setSubMaterial(10,"models/proppertextures/invisible")
+    
+    A = 5
+    holoCreate(A)
+    holoParent(A,E)
+    holoColor(A,vec(255))
+    holoScale(A,vec(1.05,1,1))
+    holoModel(A, "models/props_metaladon/parts/wheelset_40.mdl")
+    holoPos(A,E:toWorld(vec(0+AxleOffsetX,Axle1Position+AxleOffsetY,AxleOffsetZ)))
+    holoAng(A,E:toWorld(ang(0,0,0)))
+    
+    A = 6
+    holoCreate(A)
+    holoParent(A,E)
+    holoColor(A,vec(255))
+    holoScale(A,vec(1.05,1,1))
+    holoModel(A, "models/props_metaladon/parts/wheelset_40.mdl")
+    holoPos(A,E:toWorld(vec(0+AxleOffsetX,Axle2Position+AxleOffsetY,AxleOffsetZ)))
+    holoAng(A,E:toWorld(ang(0,0,0)))
+    
+    if(Three_Axle){
+    A = 7
+    holoCreate(A)
+    holoParent(A,E)
+    holoColor(A,vec(255))
+    holoScale(A,vec(1.05,1,1))
+    holoModel(A, "models/props_metaladon/parts/wheelset_40.mdl")
+    holoPos(A,E:toWorld(vec(0+AxleOffsetX,Axle3Position+AxleOffsetY,AxleOffsetZ)))
+    holoAng(A,E:toWorld(ang(0,0,0)))   
+    }
+    
+timer("spawn2",2000)
+}
+if(clk("spawn2")){
+setName("Titus's Ultra-Realistic Roller & Weathering E2 [RENDER] Rendering All Main Holograms...") 
+soundPlay(1,0,"buttons/button14.wav")
+
+# Holo Madness Begins Below (For second bogie)
+
+#---- Outer
+
+    A = 8
+    holoCreate(A)
+    holoParent(A,E2)
+    holoColor(A,vec(255))
+    holoScale(A,vec(1))
+    holoModel(A, BodyModel)
+    holoPos(A,E2:toWorld(vec(OffsetX,OffsetY,OffsetZ)))
+    holoAng(A,E2:toWorld(ang(0,0,0)))   
+    holoEntity(A):setSubMaterial(UnderCoat_SubTexture_Number,UnderCoat)
+    holoBodygroup(A,Bodygroup1[1,number],Bodygroup1[2,number])
+    holoBodygroup(A,Bodygroup2[1,number],Bodygroup2[2,number])
+    holoBodygroup(A,Bodygroup3[1,number],Bodygroup3[2,number])
+    holoBodygroup(A,Bodygroup4[1,number],Bodygroup4[2,number])
+    holoBodygroup(A,Bodygroup5[1,number],Bodygroup5[2,number])
+    holoBodygroup(A,Bodygroup6[1,number],Bodygroup6[2,number])
+    holoBodygroup(A,Bodygroup7[1,number],Bodygroup7[2,number])
+    holoBodygroup(A,Bodygroup8[1,number],Bodygroup8[2,number])
+    holoBodygroup(A,Bodygroup9[1,number],Bodygroup9[2,number])
+    holoBodygroup(A,Bodygroup10[1,number],Bodygroup10[2,number])
+    holoEntity(A):setSubMaterial(8,"models/proppertextures/invisible")
+    holoEntity(A):setSubMaterial(9,"models/proppertextures/invisible")
+    holoEntity(A):setSubMaterial(10,"models/proppertextures/invisible")
+    
+    A = 9
+    holoCreate(A)
+    holoParent(A,E2)
+    holoColor(A,vec(255))
+    holoScale(A,vec(1))
+    holoModel(A, BodyModel)
+    holoPos(A,E2:toWorld(vec(OffsetX,OffsetY,OffsetZ)))
+    holoAng(A,E2:toWorld(ang(0,0,0)))   
+    holoEntity(A):setSubMaterial(Weathering_SubTexture_Number,WeatheringTexture)
+    holoBodygroup(A,Bodygroup1[1,number],Bodygroup1[2,number])
+    holoBodygroup(A,Bodygroup2[1,number],Bodygroup2[2,number])
+    holoBodygroup(A,Bodygroup3[1,number],Bodygroup3[2,number])
+    holoBodygroup(A,Bodygroup4[1,number],Bodygroup4[2,number])
+    holoBodygroup(A,Bodygroup5[1,number],Bodygroup5[2,number])
+    holoBodygroup(A,Bodygroup6[1,number],Bodygroup6[2,number])
+    holoBodygroup(A,Bodygroup7[1,number],Bodygroup7[2,number])
+    holoBodygroup(A,Bodygroup8[1,number],Bodygroup8[2,number])
+    holoBodygroup(A,Bodygroup9[1,number],Bodygroup9[2,number])
+    holoBodygroup(A,Bodygroup10[1,number],Bodygroup10[2,number])
+    holoAlpha(A,WeatheringAmmount)
+    holoEntity(A):setSubMaterial(8,"models/proppertextures/invisible")
+    holoEntity(A):setSubMaterial(9,"models/proppertextures/invisible")
+    holoEntity(A):setSubMaterial(10,"models/proppertextures/invisible")
+   
+    A = 10
+    holoCreate(A)
+    holoParent(A,E2)
+    holoColor(A,vec(255))
+    holoScale(A,vec(1))
+    holoModel(A, BodyModel)
+    holoPos(A,E2:toWorld(vec(OffsetX,OffsetY,OffsetZ)))
+    holoAng(A,E2:toWorld(ang(0,0,0)))   
+    holoEntity(A):setSubMaterial(Grime_SubTexture_Number,GrimeTexture)
+    holoBodygroup(A,Bodygroup1[1,number],Bodygroup1[2,number])
+    holoBodygroup(A,Bodygroup2[1,number],Bodygroup2[2,number])
+    holoBodygroup(A,Bodygroup3[1,number],Bodygroup3[2,number])
+    holoBodygroup(A,Bodygroup4[1,number],Bodygroup4[2,number])
+    holoBodygroup(A,Bodygroup5[1,number],Bodygroup5[2,number])
+    holoBodygroup(A,Bodygroup6[1,number],Bodygroup6[2,number])
+    holoBodygroup(A,Bodygroup7[1,number],Bodygroup7[2,number])
+    holoBodygroup(A,Bodygroup8[1,number],Bodygroup8[2,number])
+    holoBodygroup(A,Bodygroup9[1,number],Bodygroup9[2,number])
+    holoBodygroup(A,Bodygroup10[1,number],Bodygroup10[2,number])
+    holoAlpha(A,GrimeAmmount)
+    holoEntity(A):setSubMaterial(8,"models/proppertextures/invisible")
+    holoEntity(A):setSubMaterial(9,"models/proppertextures/invisible")
+    holoEntity(A):setSubMaterial(10,"models/proppertextures/invisible")
+    
+    A = 11
+    holoCreate(A)
+    holoParent(A,E2)
+    holoColor(A,vec(255))
+    holoScale(A,vec(1))
+    holoModel(A, BodyModel)
+    holoPos(A,E2:toWorld(vec(OffsetX,OffsetY,OffsetZ)))
+    holoAng(A,E2:toWorld(ang(0,0,0)))   
+    holoEntity(A):setSubMaterial(Rust_SubTexture_Number,RustTexture)
+    holoBodygroup(A,Bodygroup1[1,number],Bodygroup1[2,number])
+    holoBodygroup(A,Bodygroup2[1,number],Bodygroup2[2,number])
+    holoBodygroup(A,Bodygroup3[1,number],Bodygroup3[2,number])
+    holoBodygroup(A,Bodygroup4[1,number],Bodygroup4[2,number])
+    holoBodygroup(A,Bodygroup5[1,number],Bodygroup5[2,number])
+    holoBodygroup(A,Bodygroup6[1,number],Bodygroup6[2,number])
+    holoBodygroup(A,Bodygroup7[1,number],Bodygroup7[2,number])
+    holoBodygroup(A,Bodygroup8[1,number],Bodygroup8[2,number])
+    holoBodygroup(A,Bodygroup9[1,number],Bodygroup9[2,number])
+    holoBodygroup(A,Bodygroup10[1,number],Bodygroup10[2,number])
+    holoAlpha(A,RustAmmount)
+    holoEntity(A):setSubMaterial(8,"models/proppertextures/invisible")
+    holoEntity(A):setSubMaterial(9,"models/proppertextures/invisible")
+    holoEntity(A):setSubMaterial(10,"models/proppertextures/invisible")
+    
+    A = 12
+    holoCreate(A)
+    holoParent(A,E2)
+    holoColor(A,vec(255))
+    holoScale(A,vec(1.05,1,1))
+    holoModel(A, "models/props_metaladon/parts/wheelset_40.mdl")
+    holoPos(A,E2:toWorld(vec(0+AxleOffsetX,Axle1Position+AxleOffsetY,AxleOffsetZ)))
+    holoAng(A,E2:toWorld(ang(0,0,0)))
+    
+    A = 13
+    holoCreate(A)
+    holoParent(A,E2)
+    holoColor(A,vec(255))
+    holoScale(A,vec(1.05,1,1))
+    holoModel(A, "models/props_metaladon/parts/wheelset_40.mdl")
+    holoPos(A,E2:toWorld(vec(0+AxleOffsetX,Axle2Position+AxleOffsetY,AxleOffsetZ)))
+    holoAng(A,E2:toWorld(ang(0,0,0)))
+    
+    if(Three_Axle){
+    A = 14
+    holoCreate(A)
+    holoParent(A,E2)
+    holoColor(A,vec(255))
+    holoScale(A,vec(1.05,1,1))
+    holoModel(A, "models/props_metaladon/parts/wheelset_40.mdl")
+    holoPos(A,E2:toWorld(vec(0+AxleOffsetX,Axle3Position+AxleOffsetY,AxleOffsetZ)))
+    holoAng(A,E2:toWorld(ang(0,0,0)))   
+    }
+  
+timer("spawn3",2000)
+}
+if(clk("spawn3")){
+setName("Titus's Ultra-Realistic Roller & Weathering E2 [RENDER] Rendering Accessory Holograms...") 
+soundPlay(1,0,"buttons/button14.wav")
+
+#---- Rerailer and Misc Holo stuff?
+
+if(RerailerBogie1){
+    if(RerailerSideA_Enable){
+        A = 15
+        holoCreate(A)
+        holoParent(A,E)
+        holoColor(A,Rerail1_SideA_Colour)
+        holoScale(A,Rerail1_SideA_Scale)
+        holoModel(A, RerailModel_SideA1)
+        holoPos(A,E:toWorld(vec(RerailerSideA_PosOffsetX,RerailerSideA_PosOffsetY,RerailerSideA_PosOffsetZ)))
+        holoAng(A,E:toWorld(RerailerSideA1_AngOffset))   
+        }
+        if(RerailerSideB_Enable){
+        A = 16
+        holoCreate(A)
+        holoParent(A,E)
+        holoColor(A,Rerail1_SideB_Colour)
+        holoScale(A,Rerail1_SideB_Scale)
+        holoModel(A, RerailModel_SideB1)
+        holoPos(A,E:toWorld(vec(RerailerSideB_PosOffsetX,RerailerSideB_PosOffsetY,RerailerSideB_PosOffsetZ)))
+        holoAng(A,E:toWorld(RerailerSideB1_AngOffset))   
+    }
+}
+
+if(RerailerBogie2){
+    if(RerailerSideA_Enable2){
+        A = 17
+        holoCreate(A)
+        holoParent(A,E2)
+        holoColor(A,Rerail2_SideA_Colour)
+        holoScale(A,Rerail2_SideA_Scale)
+        holoModel(A, RerailModel_SideA2)
+        holoPos(A,E2:toWorld(vec(RerailerSideA_PosOffsetX2,RerailerSideA_PosOffsetY2,RerailerSideA_PosOffsetZ2)))
+        holoAng(A,E2:toWorld(RerailerSideA2_AngOffset))   
+        }
+        if(RerailerSideB_Enable2){
+        A = 18
+        holoCreate(A)
+        holoParent(A,E2)
+        holoColor(A,Rerail2_SideB_Colour)
+        holoScale(A,Rerail2_SideB_Scale)
+        holoModel(A, RerailModel_SideB2)
+        holoPos(A,E2:toWorld(vec(RerailerSideC_PosOffsetX2,RerailerSideC_PosOffsetY2,RerailerSideC_PosOffsetZ2)))
+        holoAng(A,E2:toWorld(RerailerSideB2_AngOffset))   
+    }
+}
+    
+E:setAlpha(0)  
+E2:setAlpha(0)  
+soundStop("loading")
+soundPlay(1,0,"garrysmod/save_load4.wav")
+setName("Titus's Ultra-Realistic Roller & Weathering E2") 
+stoptimer("spawn")
+stoptimer("spawn2")
+stoptimer("spawn3")
+}
+
+if(!->E | !->E2){ 
+setName("Titus's Ultra-Realistic Roller & Weathering E2 [DEBUG CHECK]") E:setAlpha(255) E2:setAlpha(255)       
+printColor(vec(0,255,0),"[Titus's Ultra-Realistic Roller & Weathering E2]", vec(255,0,0), " Fatal Error!", vec(255)," Base Entity (E [ENTITY]) Not Found!", vec(255,191,0)," Expression 2 execution Halted and Shutdown.")  
+error("Base Entity (E [ENTITY]) Not Found! Expression 2 execution Halted and Shutdown.")
+}
+
+IPH = MPH*(12*5280)
+AxleRPM = (IPH/60)/WheelCircumference
+
+if(Slipping){
+    SlipSpin = AxleRPM*2
+}
+else{
+    SlipSpin = 0
+}
+if(changed(Slipping)&Slipping){
+    SlippingAxle = 2
+}
+
+TotalSlipSpin = smooth(SlipSpin,10,"slippingspin",0)
+
+interval(100)
+
+if(!->MPH_Override){
+MPH = E:velL():y()/23.5   
+}
+else{
+MPH = MPH_Override
+}
+
+RPM_A = (3.6 / 5)*AxleRPM
+WheelAngle1 += RPM_A + TotalSlipSpin
+
+RPM_C = RPM_C + ( WheelAngle1 - RPM_C ) /  max( SpinUpTime, 0 )     
+holoAng(5,E:toWorld(ang(0,0,0-RPM_C)))
+holoAng(6,E:toWorld(ang(0,0,0-RPM_C)))
+holoAng(7,E:toWorld(ang(0,0,0-RPM_C)))
+
+holoAng(12,E2:toWorld(ang(0,0,0-RPM_C)))
+holoAng(13,E2:toWorld(ang(0,0,0-RPM_C)))
+holoAng(14,E2:toWorld(ang(0,0,0-RPM_C)))
+
