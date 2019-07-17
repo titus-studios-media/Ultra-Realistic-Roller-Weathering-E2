@@ -1,5 +1,9 @@
 # Titus's Ultra-Realistic Roller & Weathering Expression 2
 
+![Build-Status](https://img.shields.io/badge/build-passing-brightgreen.svg)
+![Manifest-Version](https://img.shields.io/github/last-commit/titus-studios-media/Ultra-Realistic-Roller-Weathering-E2.svg)
+![Repo-Size](https://img.shields.io/github/repo-size/titus-studios-media/Ultra-Realistic-Roller-Weathering-E2.svg)
+
 A high accuracy "Moving Wheel" and Weathering Expression 2 for Locomotive bogies. I have been experimenting with a Weathering E2 I had made, and was planning to make a high accuracy "Moving Wheel / Axle" E2, and I decided to combine the two. The E2 gets an MPH input or MPH value from the velocity at which what direction the bogie is moving in, it converters this data with the Axle Circumference to convert the MPH input (A form of distance over time) to RPM (A unit of rotational speed or the frequency of rotation around a fixed Axis), it then converts this data into angular data which turns the hologram of the Wheel / Axle. - All pretty "Basic" Stuff.
 
 
