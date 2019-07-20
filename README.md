@@ -34,6 +34,8 @@ To Wire:
 
 **NOTE:** This E2 can be Parented!
 
+**NOTE No.2:** It is perfectly normal for the E2 to error out when you first spawn it, you MUST wire E1 and E2 to the bogies for it to function correctly. It will automaticlly stop the E2s execution if they are not wired because the E2 may start to break stuff on the server if it isn't inplace.
+
 #### You're Done!
 
 
